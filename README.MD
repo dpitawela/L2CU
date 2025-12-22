@@ -1,4 +1,4 @@
-# PHICO: Personalised Human-AI Cooperative Classification Using Augmented Noisy Labels and Model Prediction
+# L2CU: Learning To Complement Unseen Users
 
 This repository contains the code for the paper --> link to add
 
