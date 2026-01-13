@@ -15,7 +15,7 @@
 - A complete code example based on the CIFAR10N experiment is provided in the `codes/` directory that goes through Python notebooks 1 to 5.
 - `code/matrics.py` contains the implementations of the evaluation criteria.
 
-### Basic Model architecture
+### 🧠 Basic Model architecture
 The proposed architecture consists of three main components:
 
 1. **Base Model**  
@@ -65,7 +65,7 @@ An example of this architecture is shown below for the CIFAR-10N dataset, which 
 			return img_features, n_l, out
 ```
 
-### Basic data loader
+### 📑 Basic data loader
 > **Note:** Data are loaded per annotator profile
 
 ```python
@@ -86,7 +86,7 @@ An example of this architecture is shown below for the CIFAR-10N dataset, which 
 		    return img, consensus, n_l
 ```
 
-### Loss function
+### 🧮 Loss function
 ```python
     class  CorrectionLoss(nn.Module):
     	def  __init__(self, loss1, C=0, N_human=None, N_base=None):
@@ -116,7 +116,7 @@ An example of this architecture is shown below for the CIFAR-10N dataset, which 
 			return l+correction
 ```
 
-### Basic training loop
+### 🔧 Basic training loop
 
 ```python
     criterion = CorrectionLoss(nn.CrossEntropyLoss(), 0.1, noise_H)
