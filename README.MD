@@ -3,7 +3,7 @@
   <img src="./assets/ieee_logo.png" alt="IEEE Logo" width="70"/>
 </a>
 <a href="https://arxiv.org/abs/2601.06119">
-  <img src="./assets/arxiv_logo.jpg" alt="Arxiv Logo" width="50"/>
+  <img src="./assets/arxiv_logo.jpg" alt="Arxiv Logo" width="60"/>
 </a>
 
 ## Overview
