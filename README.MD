@@ -1,6 +1,6 @@
 # L2CU: Learning To Complement Unseen Users
 <a href="https://ieeexplore.ieee.org/document/11314492">
-  <img src="./assets/ieee_logo.png" alt="IEEE Logo" width="50"/>
+  <img src="./assets/ieee_logo.png" alt="IEEE Logo" width="60"/>
 </a>
 <a href="https://arxiv.org/abs/2601.06119">
   <img src="./assets/arxiv_logo.jpg" alt="Arxiv Logo" width="50"/>
@@ -15,7 +15,7 @@
 - A complete code example based on the CIFAR10N experiment is provided in the `codes/` directory that goes through Python notebooks 1 to 5.
 - `code/matrics.py` contains the implementations of the evaluation criteria.
 
-### 🧠 Basic Model architecture
+### 🧠 Basic Model Architecture
 The proposed architecture consists of three main components:
 
 1. **Base Model**  
@@ -35,20 +35,29 @@ An example of this architecture is shown below for the CIFAR-10N dataset, which 
 	class  AdaptedAI(nn.Module):
 		def  __init__(self):
 			super(AdaptedAI, self).__init__()
-			n_classes = 10
-			
-			# base model
-			# This can be any model architecture of choice that supports classification. The output should be the classification head logits
+			n_classes = 10 # CIFAR-10N contains 10 classes
+
+			# --------------------------------------------------
+			# Base Model
+			# --------------------------------------------------
+			# Any classification backbone can be used here (e.g., ResNet, Transformer).
+			# The model should output logits or feature representations of size [batch_size, n_classes].
 			self.base_model = 
 			
-			# human label encoder 
+			# --------------------------------------------------
+			# Human Label Encoder
+			# --------------------------------------------------
+			# Encodes annotator-provided labels into a latent representation that captures annotator-specific labeling behavior.
 			self.n_l_encoder = nn.Sequential(
 			nn.Linear(n_classes, 32),
 			nn.ReLU(),
 			nn.Linear(32, n_classes)
 			)  
 			
-			# decision model
+			# --------------------------------------------------
+			# Decision Model
+			# --------------------------------------------------
+			# Combines image-based features and encoded human label features to produce the final classification prediction.
 			self.decision_ai = nn.Sequential(
 			nn.Linear(2*n_classes, 64),
 			nn.ReLU(),
@@ -58,14 +67,23 @@ An example of this architecture is shown below for the CIFAR-10N dataset, which 
 			)
 		
 		def  forward(self, imgs, n_l):
+			# Extract visual features from input images
 			img_features = self.base_model(imgs)
+
+			# Encode human (annotator) labels
 			n_l_features = self.n_l_encoder(n_l)
+
+			# Concatenate image features and encoded label features
 			out = torch.cat((img_features, n_l_features), dim=1)
+
+			# Compute final prediction
 			out = self.decision_ai(out)
+
 			return img_features, n_l, out
+
 ```
 
-### 📑 Basic data loader
+### 📑 Basic Data Loader
 > **Note:** Data are loaded per annotator profile
 
 ```python
@@ -86,7 +104,7 @@ An example of this architecture is shown below for the CIFAR-10N dataset, which 
 		    return img, consensus, n_l
 ```
 
-### 🧮 Loss function
+### 🧮 Loss Function
 ```python
     class  CorrectionLoss(nn.Module):
     	def  __init__(self, loss1, C=0, N_human=None, N_base=None):
@@ -116,11 +134,11 @@ An example of this architecture is shown below for the CIFAR-10N dataset, which 
 			return l+correction
 ```
 
-### 🔧 Basic training loop
+### 🔧 Basic Training Loop
 
 ```python
     criterion = CorrectionLoss(nn.CrossEntropyLoss(), 0.1, noise_H)
-    n_classes = 10 #for CIFAR10N
+    n_classes = 10 #CIFAR10N has 10 classes
 
     EPOCHS = 100
 	for _ in  range(EPOCHS):
