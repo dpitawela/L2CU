@@ -88,7 +88,7 @@ class  AdaptedAI(nn.Module):
 > **Note:** Data are loaded per annotator profile
 
 ```python
-class  CIFAR10(VisionDataset):
+class  CIFAR10N(Dataset):
 	def  __init__(self):
 		# Initialize dataset paths, load images, consensus labels,
 		# and annotator profile specific noisy labels
